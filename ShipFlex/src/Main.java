@@ -1,11 +1,19 @@
+import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        Scanner input = new Scanner(System.in);
+        System.out.println("Welkom bij de offerte maker. Wat voorn boot wilt u maken?");
+        String bootSoort = input.nextLine();
+        Boot boot = new Boot(bootSoort);
     }
 }
 
 class Boot {
     protected String boot;
+    
+    public Boot(String boot){
+        this.boot = boot;
+    }
 }
 class grootte{
     protected int lengte;
