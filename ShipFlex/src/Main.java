@@ -104,10 +104,37 @@ class TraagheidsNavigatie extends NavigatieSystem {
 }
 
 class Motor{
-    protected boolean elektrischBinnen;
-    protected boolean elektrischBuiten;
-    protected boolean dieselBinnen;
-    protected boolean dieselBuiten;
+    protected double prijs;
+
+    Motor(double prijs){
+        this.prijs = prijs;
+    }
+    public void setPrijs(double prijs){
+        this.prijs = prijs;
+    }
+    public double getPrijs(){
+        return prijs;
+    }
+}
+class ElektrischBinnen extends Motor {
+    ElektrischBinnen(double prijs){
+        super(prijs);
+    }
+}
+class ElektrischBuiten extends Motor{
+    ElektrischBuiten(double prijs){
+        super(prijs);
+    }
+}
+class DieselBinnen extends Motor{
+    DieselBinnen(double prijs){
+        super(prijs);
+    }
+}
+class DieselBuiten extends Motor{
+    DieselBuiten(double prijs){
+        super(prijs);
+    }
 }
 class BrandstofTank{
     protected int grootte;
