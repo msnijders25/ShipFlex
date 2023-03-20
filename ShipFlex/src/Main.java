@@ -13,12 +13,16 @@ public class Main {
         System.out.println("4. Anker");
         System.out.println("5. Hout");
         System.out.println("6. Extra");
-        System.out.println("7. Navigatiesysteem");
         int keuzeMenu = input.nextInt();
         switch(keuzeMenu) {
             case 1: 
                 Navigatie();
             break;
+            case 2:
+                Motor();
+            break;
+            case 3: 
+               // BrandstofTank();
         } 
     }
     public static void Navigatie(){
@@ -62,6 +66,33 @@ public class Main {
                 System.out.println(navigatieSystem.getClass().getSimpleName());
                 System.out.println("Prijs: " + navigatieSystem.getPrijs());    
                    
+    }
+    public static void Motor(){
+        Scanner input = new Scanner(System.in);
+        System.out.printf("Kies de type motor dat u wilt gebruiken%n1.ElektrischBinnen%n2.ElektrischBuiten%n3.DieselBinnen%n4.DieselBuiten");
+        int keuzeMotor = input.nextInt();
+        System.out.println("Wat is de prijs van deze motor");
+        double prijs = input.nextInt();
+        Motor Motor ;
+        switch(keuzeMotor){
+            case 1: 
+                Motor = new ElektrischBuiten(prijs);
+            break;
+            case 2:
+                Motor = new ElektrischBuiten(prijs);
+            break;
+            case 3:
+                Motor = new DieselBuiten(prijs);
+            break;
+            case 4:
+                Motor = new DieselBinnen(prijs);
+            break;
+            default:
+                System.out.println("Ongeldige keuze");
+        }
+        System.out.println("U heeft gekozen voor:");
+        System.out.println(Motor.getClass().getSimpleName());
+        System.out.println("Prijs: "+ Motor.getPrijs());
     }
 }
 class Boot {
