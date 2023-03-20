@@ -6,47 +6,64 @@ public class Main {
         String bootSoort = input.nextLine();
         Boot boot = new Boot(bootSoort);
 
-        System.out.println("Kies uw navigatiesysteem:");
-        System.out.println("1. GPS ontvanger");
-        System.out.println("2. Kaartplotter");
-        System.out.println("3. Kompas");
-        System.out.println("4. Dieptemeter");
-        System.out.println("5. Traagheidsnavigatie");
-
-        int keuzeNavi = input.nextInt();
-
-        System.out.println("Kies de prijs: ");
-        double prijs = input.nextDouble();
-
-        NavigatieSystem navigatieSystem;
-
-        switch (keuzeNavi) {
-            case 1:
-                navigatieSystem = new GpsOntvanger(prijs);
-                break;
-            case 2:
-                navigatieSystem = new KaartPlotter(prijs);
-                break;
-            case 3:
-                navigatieSystem = new Kompas(prijs);
-                break;
-            case 4:
-                navigatieSystem = new DiepteMeter(prijs);
-                break;
-            case 5:
-                navigatieSystem = new TraagheidsNavigatie(prijs);
-                break;
-            default:
-                System.out.println("Ongeldige keuze.");
-                return;
-        }
-
-        System.out.println("U heeft gekozen voor:");
-        System.out.println(navigatieSystem.getClass().getSimpleName());
-        System.out.println("Prijs: " + navigatieSystem.getPrijs());    
+        System.out.println("Kies welk onderdeel u wilt kiezen");
+        System.out.println("1. Navigatiesysteem");
+        System.out.println("2. Motor");
+        System.out.println("3. Brandstoftank");
+        System.out.println("4. Anker");
+        System.out.println("5. Hout");
+        System.out.println("6. Extra");
+        System.out.println("7. Navigatiesysteem");
+        int keuzeMenu = input.nextInt();
+        switch(keuzeMenu) {
+            case 1: 
+                Navigatie();
+            break;
+        } 
+    }
+    public static void Navigatie(){
+                Scanner input = new Scanner(System.in);
+                System.out.println("Kies uw navigatiesysteem:");
+                System.out.println("1. GPS ontvanger");
+                System.out.println("2. Kaartplotter");
+                System.out.println("3. Kompas");
+                System.out.println("4. Dieptemeter");
+                System.out.println("5. Traagheidsnavigatie");
+            
+                int keuzeNavi = input.nextInt();
+            
+                System.out.println("Kies de prijs: ");
+                double prijs = input.nextDouble();
+            
+                NavigatieSystem navigatieSystem;
+            
+                switch (keuzeNavi) {
+                    case 1:
+                        navigatieSystem = new GpsOntvanger(prijs);
+                        break;
+                    case 2:
+                        navigatieSystem = new KaartPlotter(prijs);
+                        break;
+                    case 3:
+                        navigatieSystem = new Kompas(prijs);
+                        break;
+                    case 4:
+                        navigatieSystem = new DiepteMeter(prijs);
+                        break;
+                    case 5:
+                        navigatieSystem = new TraagheidsNavigatie(prijs);
+                        break;
+                    default:
+                        System.out.println("Ongeldige keuze.");
+                        return;
+                }
+            
+                System.out.println("U heeft gekozen voor:");
+                System.out.println(navigatieSystem.getClass().getSimpleName());
+                System.out.println("Prijs: " + navigatieSystem.getPrijs());    
+                   
     }
 }
-
 class Boot {
     protected String boot;
     
