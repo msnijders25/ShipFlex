@@ -5,6 +5,45 @@ public class Main {
         System.out.println("Welkom bij de offerte maker. Wat voorn boot wilt u maken?");
         String bootSoort = input.nextLine();
         Boot boot = new Boot(bootSoort);
+
+        System.out.println("Kies uw navigatiesysteem:");
+        System.out.println("1. GPS ontvanger");
+        System.out.println("2. Kaartplotter");
+        System.out.println("3. Kompas");
+        System.out.println("4. Dieptemeter");
+        System.out.println("5. Traagheidsnavigatie");
+
+        int keuzeNavi = input.nextInt();
+
+        System.out.println("Kies de prijs: ");
+        double prijs = input.nextDouble();
+
+        NavigatieSystem navigatieSystem;
+
+        switch (keuzeNavi) {
+            case 1:
+                navigatieSystem = new GpsOntvanger(prijs);
+                break;
+            case 2:
+                navigatieSystem = new KaartPlotter(prijs);
+                break;
+            case 3:
+                navigatieSystem = new Kompas(prijs);
+                break;
+            case 4:
+                navigatieSystem = new DiepteMeter(prijs);
+                break;
+            case 5:
+                navigatieSystem = new TraagheidsNavigatie(prijs);
+                break;
+            default:
+                System.out.println("Ongeldige keuze.");
+                return;
+        }
+
+        System.out.println("U heeft gekozen voor:");
+        System.out.println(navigatieSystem.getClass().getSimpleName());
+        System.out.println("Prijs: " + navigatieSystem.getPrijs());    
     }
 }
 
@@ -18,13 +57,52 @@ class Boot {
 class grootte{
     protected int lengte;
 }
-class NavigatieSystem{
-    protected boolean gpsOntvanger;
-    protected boolean kaartPlotter;
-    protected boolean kompas;
-    protected boolean diepteMeter;
-    protected boolean traagheidsNavigatie;
+
+class NavigatieSystem {
+    protected double prijs;
+
+    NavigatieSystem(double prijs){
+        this.prijs = prijs;
+    }
+
+    public void setPrijs(double prijs) {
+        this.prijs = prijs;
+    }
+
+    public double getPrijs() {
+        return prijs;
+    }
 }
+
+class GpsOntvanger extends NavigatieSystem {
+    GpsOntvanger(double prijs){
+        super(prijs);
+    }
+}
+class KaartPlotter extends NavigatieSystem {
+    KaartPlotter(double prijs){
+        super(prijs);
+    }
+}
+
+class Kompas extends NavigatieSystem {
+    Kompas(double prijs){
+        super(prijs);
+    }
+}
+
+class DiepteMeter extends NavigatieSystem {
+    DiepteMeter(double prijs){
+        super(prijs);
+    }
+}
+
+class TraagheidsNavigatie extends NavigatieSystem {
+    TraagheidsNavigatie(double prijs){
+        super(prijs);
+    }
+}
+
 class Motor{
     protected boolean elektrischBinnen;
     protected boolean elektrischBuiten;
