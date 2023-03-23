@@ -5,7 +5,11 @@ public class Main {
         System.out.println("Welkom bij de offerte maker. Wat voorn boot wilt u maken?");
         String bootSoort = input.nextLine();
         Boot boot = new Boot(bootSoort);
+        mainMenu();
 
+    } 
+    public static void mainMenu(){
+        Scanner input = new Scanner(System.in);
         System.out.println("Kies welk onderdeel u wilt kiezen");
         System.out.println("1. Navigatiesysteem");
         System.out.println("2. Motor");
@@ -22,10 +26,10 @@ public class Main {
                 Motor();
             break;
             case 3: 
-               // BrandstofTank();
+            // BrandstofTank();
         } 
-    }
-    public static void Navigatie(){
+    } 
+        public static void Navigatie(){
                 Scanner input = new Scanner(System.in);
                 System.out.println("Kies uw navigatiesysteem:");
                 System.out.println("1. GPS ontvanger");
@@ -65,36 +69,41 @@ public class Main {
                 System.out.println("U heeft gekozen voor:");
                 System.out.println(navigatieSystem.getClass().getSimpleName());
                 System.out.println("Prijs: " + navigatieSystem.getPrijs());    
-                   
+                mainMenu();
     }
-    public static void Motor(){
-        Scanner input = new Scanner(System.in);
-        System.out.printf("Kies de type motor dat u wilt gebruiken%n1.ElektrischBinnen%n2.ElektrischBuiten%n3.DieselBinnen%n4.DieselBuiten");
-        int keuzeMotor = input.nextInt();
-        System.out.println("Wat is de prijs van deze motor");
-        double prijs = input.nextInt();
-        Motor Motor ;
-        switch(keuzeMotor){
-            case 1: 
-                Motor = new ElektrischBuiten(prijs);
-            break;
-            case 2:
-                Motor = new ElektrischBuiten(prijs);
-            break;
-            case 3:
-                Motor = new DieselBuiten(prijs);
-            break;
-            case 4:
-                Motor = new DieselBinnen(prijs);
-            break;
-            default:
-                System.out.println("Ongeldige keuze");
+        public static void Motor(){
+            Scanner input = new Scanner(System.in);
+            System.out.printf("Kies de type motor dat u wilt gebruiken%n1.ElektrischBinnen%n2.ElektrischBuiten%n3.DieselBinnen%n4.DieselBuiten%n");
+            int keuzeMotor = input.nextInt();
+            System.out.println("Wat is de prijs van deze motor");
+            double prijs = input.nextInt();
+            Motor motor;
+            switch(keuzeMotor){
+                case 1: 
+                    motor = new ElektrischBuiten(prijs);
+                break;
+                case 2:
+                    motor = new ElektrischBuiten(prijs);
+                break;
+                case 3:
+                    motor = new DieselBuiten(prijs);
+                break;
+                case 4:
+                    motor = new DieselBinnen(prijs);
+                break;
+                default:
+                    System.out.println("Ongeldige keuze");
+                    return;
+            }
+            System.out.println("U heeft gekozen voor:");
+            System.out.println(motor.getClass().getSimpleName());
+            System.out.println("Prijs: "+ motor.getPrijs());
+            mainMenu();
         }
-        System.out.println("U heeft gekozen voor:");
-        System.out.println(Motor.getClass().getSimpleName());
-        System.out.println("Prijs: "+ Motor.getPrijs());
+    
     }
-}
+
+
 class Boot {
     protected String boot;
     
@@ -152,7 +161,7 @@ class TraagheidsNavigatie extends NavigatieSystem {
 }
 
 class Motor{
-    protected double prijs;
+    private double prijs;
 
     Motor(double prijs){
         this.prijs = prijs;
