@@ -100,8 +100,48 @@ public class Main {
             System.out.println("Prijs: "+ motor.getPrijs());
             mainMenu();
         }
+        public static void BrandstofTank(){
+            Scanner input = new Scanner(System.in);
+            System.out.println("Kies uw brandstoftank:");
+            System.out.println("1. Standaard brandstoftank");
+            System.out.println("2. Groot brandstoftank");
+            System.out.println("3. Extra groot brandstoftank");
+            System.out.println("4. Jerrycan");
     
+            int keuzeTank = input.nextInt();
+    
+            System.out.println("Kies de prijs: ");
+            double prijs = input.nextDouble();
+    
+            BrandstofTank brandstofTank;
+    
+            switch (keuzeTank) {
+    
+                case 1:
+                    brandstofTank = new StandaardTank(prijs);
+                    break;
+                case 2:
+                    brandstofTank = new GrootTank(prijs);
+                    break;
+                case 3:
+                    brandstofTank = new ExtraGrootTank(prijs);
+                    break;
+                case 4:
+                    brandstofTank = new Jerrycan(prijs);
+                    break;
+                default:
+                    System.out.println("Ongeldige keuze.");
+                    return;
+                }
+    
+            System.out.println("U heeft gekozen voor:");
+            System.out.println(brandstofTank.getClass().getSimpleName());
+            System.out.println("Prijs: " + brandstofTank.getPrijs());
+        }
     }
+    
+    
+
 
 
 class Boot {
@@ -193,10 +233,47 @@ class DieselBuiten extends Motor{
         super(prijs);
     }
 }
-class BrandstofTank{
+class BrandstofTank {
     protected int grootte;
     protected boolean jerrycan;
+    protected double prijs;
+
+    BrandstofTank(double prijs) {
+        this.prijs = prijs;
+    }
+
+    public void setPrijs(double prijs) {
+        this.prijs = prijs;
+    }
+
+    public double getPrijs() {
+        return prijs;
+    }
 }
+class StandaardTank extends BrandstofTank{
+
+    StandaardTank(double prijs) {
+        super(prijs);
+    }
+}
+class GrootTank extends BrandstofTank{
+
+    GrootTank(double prijs) {
+        super(prijs);
+    }
+}
+class ExtraGrootTank extends BrandstofTank{
+
+    ExtraGrootTank(double prijs) {
+        super(prijs);
+    }
+}
+class Jerrycan extends BrandstofTank {
+    Jerrycan(double prijs) {
+        super(prijs);
+    }
+}
+
 class Anker{
     protected int anker;
 }
