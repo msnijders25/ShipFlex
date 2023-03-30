@@ -23,9 +23,12 @@ public class Main {
         navigatieSysteem.setOnderdelen(navigatieSystemen);
         //zet alle navigatiesystemen in categorie navigatiesysteem
 
-        soortOnderdelen hout = new soortOnderdelen("Hout");
+       soortOnderdelen hout = new soortOnderdelen("Hout");
         ArrayList<Onderdelen> houten = new ArrayList<>();
         initialiseerHout(houten);
+        //initialiseert hout in onderdelen
+        hout.setOnderdelen(houten);
+        //zet alle hout in categorie hout
 
         soortOnderdelen motor = new soortOnderdelen("Motor");
         //maakt categorie Motor
@@ -191,48 +194,68 @@ public class Main {
     public static void lijstOpties(ArrayList<Onderdelen> onderdelen, ArrayList<soortOnderdelen> soortOnderdelens){
 
             ArrayList<String> navigatieSystemen = new ArrayList<>();
-            navigatieSystemen.add("GPS Ontvanger");
-            navigatieSystemen.add("Kaartplotter");
-            navigatieSystemen.add("Compass");
-            navigatieSystemen.add("Diepte meter");
-            navigatieSystemen.add("Traagsheidsnavigatie");
+        navigatieSystemen.add("GPS Ontvanger");
+        navigatieSystemen.add("Kaartplotter");
+        navigatieSystemen.add("Compass");
+        navigatieSystemen.add("Diepte meter");
+        navigatieSystemen.add("Traagsheidsnavigatie");
 
-            List<String> list = navigatieSystemen;
+        List<String> list = navigatieSystemen;
 
-            System.out.println("List navigatiesystem: ");
-            for (String item: list){
-                System.out.println("-" + item);
-            }
-            System.out.println();
+        System.out.println("List navigatiesystem: ");
+        System.out.println();
+        for (String item: list){
+            System.out.println("-" + item);
+        }
+        System.out.println();
 
-            ArrayList<String> motors = new ArrayList<>();
-            motors.add("Elektrische binnenboord motor");
-            motors.add("Elektrische buitenboord motor");
-            motors.add("Diesel binnenboord motor");
-            motors.add("Diesel buitenboord motor");
+        ArrayList<String> houten = new ArrayList<>();
+        houten.add("Iroko");
+        houten.add("Mahonie");
+        houten.add("Oak");
+        houten.add("Plantage teak");
+        houten.add("Padoekes");
+        houten.add("Marple");
+        houten.add("Essen");
+        houten.add("Afzelia");
 
-            List<String> list1 = motors;
+        List<String> list1 = houten;
 
-            System.out.println("List navigatiesystem: ");
-            System.out.println();
-            for (String item1: list1){
-                System.out.println("-" + item1);
-            }
-            System.out.println();
+        System.out.println("List hout: ");
+        System.out.println();
+        for (String item1: list1){
+            System.out.println("-" + item1);
+        }
+        System.out.println();
 
-            ArrayList<String> brandstofTanken = new ArrayList<>();
-            brandstofTanken.add("Standaard tank");
-            brandstofTanken.add("Groot tank");
-            brandstofTanken.add("Extra groot tank");
-            brandstofTanken.add("Jerrycan");
+        ArrayList<String> motors = new ArrayList<>();
+        motors.add("Elektrische binnenboord motor");
+        motors.add("Elektrische buitenboord motor");
+        motors.add("Diesel binnenboord motor");
+        motors.add("Diesel buitenboord motor");
 
-            List<String> list2 = brandstofTanken;
+        List<String> list2 = motors;
 
-            System.out.println("List navigatiesystem: ");
-            for (String item2: list2){
-                System.out.println("-" + item2);
-            }
+        System.out.println("List motors: ");
+        System.out.println();
+        for (String item2: list2){
+            System.out.println("-" + item2);
+        }
+        System.out.println();
 
+        ArrayList<String> brandstofTanken = new ArrayList<>();
+        brandstofTanken.add("Standaard tank");
+        brandstofTanken.add("Groot tank");
+        brandstofTanken.add("Extra groot tank");
+        brandstofTanken.add("Jerrycan");
+
+        List<String> list3 = brandstofTanken;
+
+        System.out.println("List brandstofTank: ");
+        System.out.println();
+        for (String item3: list3){
+            System.out.println("-" + item3);
+        }
         }
 
     public static void voegMilieukorting() {
