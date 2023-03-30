@@ -22,6 +22,9 @@ public class Main {
         navigatieSysteem.setOnderdelen(navigatieSystemen);
         //zet alle navigatiesystemen in categorie navigatiesysteem
 
+        soortOnderdelen hout = new soortOnderdelen("Hout");
+        ArrayList<Onderdelen> houten = new ArrayList<>();
+        initialiseerHout(houten);
 
         soortOnderdelen motor = new soortOnderdelen("Motor");
         //maakt categorie Motor
@@ -70,7 +73,7 @@ public class Main {
             System.out.println("Ongeldige gebruikersnr");
             login(gebruikers, klant, klantTypes,  totaal, onderdelen, soortOnderdelens);
         } else {
-            scheepsBouwerMenu(totaal, klant, klantTypes, onderdelen, soortOnderdelens);
+            scheepsBouwerMenu(totaal, klant, klantTypes, onderdelen, soortOnderdelens, gebruikers);
         }
     }
 
@@ -101,7 +104,7 @@ public class Main {
     public void maakKlantLijst(){
 
     }
-    public static void scheepsBouwerMenu(Totaal totaal, KlantType klant, ArrayList<KlantType> klanten, ArrayList<Onderdelen> onderdelen, ArrayList<soortOnderdelen> soortOnderdelens){
+    public static void scheepsBouwerMenu(Totaal totaal, KlantType klant, ArrayList<KlantType> klanten, ArrayList<Onderdelen> onderdelen, ArrayList<soortOnderdelen> soortOnderdelens, ArrayList<Gebruiker> gebruikers){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Kies voor 1 van opties:");
         System.out.println("1. Maak een offerte");
@@ -113,7 +116,7 @@ public class Main {
 
         int keuze = scanner.nextInt();
         if(keuze == 1){
-            offerteMaker(totaal, klant, onderdelen, soortOnderdelens, klanten);
+            offerteMaker(totaal, klant, onderdelen, soortOnderdelens, klanten, gebruikers);
         }
         if(keuze == 2){
             lijstOpties(onderdelen, soortOnderdelens);
@@ -131,10 +134,10 @@ public class Main {
             voegNieuweOnderdelen(onderdelen, soortOnderdelens);
         }
     }
-    public static void offerteMaker(Totaal totaal, KlantType klant, ArrayList<Onderdelen> selectedOnderdelen, ArrayList<soortOnderdelen> categorien, ArrayList<KlantType> klantTypes){
-       Scanner scanner = new Scanner(System.in);
-       System.out.println("Voor welke soort klant is deze offerte?");
-       KlantType nieuwklant = initialiseerKlantKorting(klantTypes);
+    public static void offerteMaker(Totaal totaal, KlantType klant, ArrayList<Onderdelen> selectedOnderdelen, ArrayList<soortOnderdelen> categorien, ArrayList<KlantType> klantTypes, ArrayList<Gebruiker> gebruikers ){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Voer de klantCode voor wie deze offerte is:");
+        KlantType nieuwklant = initialiseerKlantKorting(klantTypes);
         System.out.println("Voor welke soort onderdelen wilt u kiezen?:");
         for (int i = 0; i < categorien.size(); i++) {
             //print catogorien
@@ -218,6 +221,17 @@ public class Main {
         navigatieSystemen.add(new Onderdelen("Compass"));
         navigatieSystemen.add(new Onderdelen("Diepte meter"));
         navigatieSystemen.add(new Onderdelen("Traagsheidsnavigatie"));}
+
+    public static void initialiseerHout( ArrayList<Onderdelen> hout) {
+        hout.add(new Onderdelen("Iroko"));
+        hout.add(new Onderdelen("Mahonie"));
+        hout.add(new Onderdelen("Oak"));
+        hout.add(new Onderdelen("Plantage teak"));
+        hout.add(new Onderdelen("Padoekes"));
+        hout.add(new Onderdelen("Marple"));
+        hout.add(new Onderdelen("Essen"));
+        hout.add(new Onderdelen("Afzelia"));
+    }
     public static void initialiseerMotor( ArrayList<Onderdelen> motors) {
         motors.add(new Onderdelen("Elektrische binnenboord motor"));
         motors.add(new Onderdelen("Elektrische buitenboord motor"));
@@ -272,24 +286,44 @@ public class Main {
 
 }
 
-class Gebruiker{
+class Offerte{
+    protected Gebruiker klant;
+
+    Offerte(Gebruiker klant){
+        this.klant = klant;
+    }
+
+}
+class Gebruiker {
     protected String gebruikernr;
+    protected KlantType klanttype;
 
-    Gebruiker(String gebruikernr){
+    Gebruiker(String gebruikernr) {
         this.gebruikernr = gebruikernr;
 
     }
-    Gebruiker(){
+
+    Gebruiker(String gebruikernr, KlantType klanttype) {
+        super();
+        this.klanttype = klanttype;
 
     }
-    public void setGebruikernr(){
+
+    public void setGebruikernr() {
         this.gebruikernr = gebruikernr;
     }
-    public String getGebruikernr(){
+
+    public String getGebruikernr() {
         return gebruikernr;
     }
-}
 
+    public void setKlanttype() {
+        this.klanttype = klanttype;
+    }
+    public KlantType getKlanttype(){
+        return klanttype;
+    }
+}
 class Totaal{
     protected KlantType klantType;
 
