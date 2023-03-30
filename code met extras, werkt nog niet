@@ -258,8 +258,28 @@ public class Main {
     List<String> list = navigatieSystemen;
 
     System.out.println("List navigatiesystem: ");
+    System.out.println();
     for (String item: list){
       System.out.println("-" + item);
+    }
+    System.out.println();
+
+    ArrayList<String> houten = new ArrayList<>();
+    houten.add("Iroko");
+    houten.add("Mahonie");
+    houten.add("Oak");
+    houten.add("Plantage teak");
+    houten.add("Padoekes");
+    houten.add("Marple");
+    houten.add("Essen");
+    houten.add("Afzelia");
+
+    List<String> list1 = houten;
+
+    System.out.println("List hout: ");
+    System.out.println();
+    for (String item1: list1){
+      System.out.println("-" + item1);
     }
     System.out.println();
 
@@ -269,12 +289,12 @@ public class Main {
     motors.add("Diesel binnenboord motor");
     motors.add("Diesel buitenboord motor");
 
-    List<String> list1 = motors;
+    List<String> list2 = motors;
 
-    System.out.println("List navigatiesystem: ");
+    System.out.println("List motors: ");
     System.out.println();
-    for (String item1: list1){
-      System.out.println("-" + item1);
+    for (String item2: list2){
+      System.out.println("-" + item2);
     }
     System.out.println();
 
@@ -284,14 +304,15 @@ public class Main {
     brandstofTanken.add("Extra groot tank");
     brandstofTanken.add("Jerrycan");
 
-    List<String> list2 = brandstofTanken;
+    List<String> list3 = brandstofTanken;
 
-    System.out.println("List navigatiesystem: ");
-    for (String item2: list2){
-      System.out.println("-" + item2);
+    System.out.println("List brandstofTank: ");
+    System.out.println();
+    for (String item3: list3){
+      System.out.println("-" + item3);
     }
-
   }
+  
 
   public static void voegMilieukorting() {
   }
