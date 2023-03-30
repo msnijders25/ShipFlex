@@ -45,7 +45,7 @@ public class Main {
         //zet alle brandstofTanks in categorie brandstoftank
 
         ArrayList<soortOnderdelen> categorien = new ArrayList<>();
-        initialiseerCategorien(categorien, navigatieSysteem, motor, brandStofTank);
+        initialiseerCategorien(categorien, navigatieSysteem, motor, brandStofTank, hout);
         ArrayList<Onderdelen> selectedOnderdelen = new ArrayList<>();
         //zet categorien die hierboven geinitialiseerd zijn in een arraylist.
         KlantType klant = new KlantType();
@@ -189,50 +189,52 @@ public class Main {
     }
 
     public static void lijstOpties(ArrayList<Onderdelen> onderdelen, ArrayList<soortOnderdelen> soortOnderdelens){
-ArrayList<String> navigatieSystemen = new ArrayList<>();
-        navigatieSystemen.add("GPS Ontvanger");
-        navigatieSystemen.add("Kaartplotter");
-        navigatieSystemen.add("Compass");
-        navigatieSystemen.add("Diepte meter");
-        navigatieSystemen.add("Traagsheidsnavigatie");
 
-        List<String> list = navigatieSystemen;
-        
-        System.out.println("List navigatiesystem: ");
-        for (String item: list){
-            System.out.println("-" + item);
+            ArrayList<String> navigatieSystemen = new ArrayList<>();
+            navigatieSystemen.add("GPS Ontvanger");
+            navigatieSystemen.add("Kaartplotter");
+            navigatieSystemen.add("Compass");
+            navigatieSystemen.add("Diepte meter");
+            navigatieSystemen.add("Traagsheidsnavigatie");
+
+            List<String> list = navigatieSystemen;
+
+            System.out.println("List navigatiesystem: ");
+            for (String item: list){
+                System.out.println("-" + item);
+            }
+            System.out.println();
+
+            ArrayList<String> motors = new ArrayList<>();
+            motors.add("Elektrische binnenboord motor");
+            motors.add("Elektrische buitenboord motor");
+            motors.add("Diesel binnenboord motor");
+            motors.add("Diesel buitenboord motor");
+
+            List<String> list1 = motors;
+
+            System.out.println("List navigatiesystem: ");
+            System.out.println();
+            for (String item1: list1){
+                System.out.println("-" + item1);
+            }
+            System.out.println();
+
+            ArrayList<String> brandstofTanken = new ArrayList<>();
+            brandstofTanken.add("Standaard tank");
+            brandstofTanken.add("Groot tank");
+            brandstofTanken.add("Extra groot tank");
+            brandstofTanken.add("Jerrycan");
+
+            List<String> list2 = brandstofTanken;
+
+            System.out.println("List navigatiesystem: ");
+            for (String item2: list2){
+                System.out.println("-" + item2);
+            }
+
         }
-        System.out.println();
 
-        ArrayList<String> motors = new ArrayList<>();
-        motors.add("Elektrische binnenboord motor");
-        motors.add("Elektrische buitenboord motor");
-        motors.add("Diesel binnenboord motor");
-        motors.add("Diesel buitenboord motor");
-
-        List<String> list1 = motors;
-        
-        System.out.println("List navigatiesystem: ");
-        System.out.println();
-        for (String item1: list1){
-            System.out.println("-" + item1);
-        }
-        System.out.println();
-
-        ArrayList<String> brandstofTanken = new ArrayList<>();
-        brandstofTanken.add("Standaard tank");
-        brandstofTanken.add("Groot tank");
-        brandstofTanken.add("Extra groot tank");
-        brandstofTanken.add("Jerrycan");
-
-        List<String> list2 = brandstofTanken;
-        
-        System.out.println("List navigatiesystem: ");
-        for (String item2: list2){
-            System.out.println("-" + item2);
-        }
-
-    }
     public static void voegMilieukorting() {
     }
     public static void kiesKlantkorting(ArrayList<KlantType> klant){
@@ -285,7 +287,7 @@ ArrayList<String> navigatieSystemen = new ArrayList<>();
         brandstofTanken.add(new Onderdelen("Groot tank"));
         brandstofTanken.add(new Onderdelen("Extra groot tank"));
         brandstofTanken.add(new Onderdelen("Jerrycan"));}
-    public static void initialiseerCategorien(ArrayList<soortOnderdelen> categorien, soortOnderdelen navigatieSysteem, soortOnderdelen motor, soortOnderdelen brandStofTank){
+    public static void initialiseerCategorien(ArrayList<soortOnderdelen> categorien, soortOnderdelen navigatieSysteem, soortOnderdelen motor, soortOnderdelen brandStofTank, soortOnderdelen hout){
         categorien.add(navigatieSysteem);
         categorien.add(motor);
         categorien.add(brandStofTank);
@@ -330,13 +332,19 @@ ArrayList<String> navigatieSystemen = new ArrayList<>();
 }
 
 class Offerte{
+
+    protected soortOnderdelen soortOnderdelen;
     protected Gebruiker klant;
 
     Offerte(Gebruiker klant){
         this.klant = klant;
     }
 
-}
+
+
+    }
+
+
 class Gebruiker {
     protected String gebruikernr;
     protected KlantType klanttype;
@@ -371,6 +379,9 @@ class Totaal{
     protected KlantType klantType;
 
     protected double totaalprijs;
+    protected soortOnderdelen soortOnderdelen;
+    protected Onderdelen onderdelen;
+
     Totaal(){
 
     }
@@ -389,8 +400,8 @@ class Totaal{
     }
 }
 class KlantType{
-    String naam;
-    int korting;
+    protected String naam;
+    protected int korting;
 
     KlantType(String naam){
         this.naam = naam;
@@ -415,8 +426,8 @@ class KlantType{
     }
 }
 class soortOnderdelen{
-    String soortOnderdeel;
-    ArrayList<Onderdelen> onderdelen;
+    protected String soortOnderdeel;
+    protected ArrayList<Onderdelen> onderdelen;
 
     soortOnderdelen(String soortOnderdeel){
         this.soortOnderdeel = soortOnderdeel;
@@ -432,8 +443,8 @@ class soortOnderdelen{
 
 }
 class Onderdelen{
-    String naam;
-    double prijs;
+    protected String naam;
+    protected double prijs;
 
     Onderdelen(String naam){
         this.naam = naam;
