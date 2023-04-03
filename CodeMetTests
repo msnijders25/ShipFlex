@@ -192,7 +192,7 @@ lijstOpties(onderdelen, soortOnderdelens);
                 for(KlantType klanten: klantTypes){
                     int i = 1;
                     System.out.println(i + ". " + klanten.getNaam());
-                    teller++;
+                    i++;
                 }
                 int kiesKlantType = scanner.nextInt();
                 gebruiker.setKlanttype(klantTypes.get(kiesKlantType - 1));
