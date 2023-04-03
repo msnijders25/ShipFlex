@@ -651,6 +651,8 @@ class UnitTests{
 
     public void checkBerekeningKlantKortingOpOfferte(){
         Gebruiker gebruiker = new Gebruiker("Steven");
+        //Object Gebruiker word gebruikt om de informatie voor de offerte bij een gebruiker op te slaan
+        //zodat de klant later de offerte zelf in het programma kan ophalen
         KlantType klantType = new KlantType();
         ArrayList <Onderdelen> onderdelen = new ArrayList<>();
         Onderdelen onderdeel= new Onderdelen("Walrus", 700);
@@ -662,6 +664,8 @@ class UnitTests{
         totaal.setKlantType(gebruiker.getKlanttype());
         System.out.println(gebruiker.getKlanttype().getNaam());
         totaal.setTotaalPrijs(onderdelen);
+        gebruiker.setTotaal(totaal);
+        //hier wordt de informatie van de offerte bij de gebruiker "Steven" Opgeslagen
 
         System.out.print(totaal.getTotaalPrijs());
     }
