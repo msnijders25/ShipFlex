@@ -1,0 +1,702 @@
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Assertions;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.List;
+
+
+
+public class Main {
+
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Offerte> offertes = new ArrayList<>();
+        Totaal totaal = new Totaal();
+        ArrayList<Gebruiker> gebruikers = new ArrayList<>();
+        initialiseerGebruikers(gebruikers);
+        ArrayList<KlantType> klantTypes = new ArrayList<>();
+        initialiseerKlanttype(klantTypes);
+        //Zet Klanttypes particulieren, bedrijven en overheden in het systeem
+
+        SoortOnderdelen navigatieSysteem = new SoortOnderdelen("Navigatiesysteem");
+        //maakt categorie Navigatiesysteem
+        ArrayList<Onderdelen> navigatieSystemen = new ArrayList<>();
+        initialiseerNavigatieSysteem(navigatieSystemen);
+        //initialiseerd navigatiesystemen in onderdelen
+        navigatieSysteem.setOnderdelen(navigatieSystemen);
+        //zet alle navigatiesystemen in categorie navigatiesysteem
+
+
+        SoortOnderdelen hout = new SoortOnderdelen("Hout");
+        ArrayList<Onderdelen> houten = new ArrayList<>();
+        initialiseerHout(houten);
+        hout.setOnderdelen(houten);
+
+        SoortOnderdelen motor = new SoortOnderdelen("Motor");
+        //maakt categorie Motor
+        ArrayList<Onderdelen> motors = new ArrayList<>();
+        initialiseerMotor(motors);
+        //initialiseerd motors in onderdelen
+        motor.setOnderdelen(motors);
+        //zet alle motors in categorie motor
+
+
+        SoortOnderdelen brandStofTank = new SoortOnderdelen("Brandstoftank");
+        //maakt categorie Brandstoftank
+        ArrayList<Onderdelen> brandstofTanken = new ArrayList<>();
+        initialiseerBrandstofTank(brandstofTanken);
+        //initialiseerd brandstoftanken in onderdelen
+        brandStofTank.setOnderdelen(brandstofTanken);
+        //zet alle brandstofTanks in categorie brandstoftank
+
+        SoortOnderdelen extra = new SoortOnderdelen("Extras");
+        ArrayList<Onderdelen> extras = new ArrayList<>();
+        initialiseerExtra(extras);
+        extra.setOnderdelen(extras);
+
+        ArrayList<SoortOnderdelen> categorien = new ArrayList<>();
+        initialiseerCategorien(categorien, navigatieSysteem, motor, brandStofTank, hout, extra);
+        ArrayList<Onderdelen> selectedOnderdelen = new ArrayList<>();
+        //zet categorien die hierboven geinitialiseerd zijn in een arraylist.
+        KlantType klant = new KlantType();
+        login(gebruikers, klant, klantTypes, totaal, selectedOnderdelen, categorien);
+
+
+    }
+
+
+    public static void login(ArrayList<Gebruiker> gebruikers, KlantType klant, ArrayList<KlantType> klantTypes, Totaal totaal, ArrayList<Onderdelen> onderdelen, ArrayList<SoortOnderdelen> soortOnderdelens) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welkom bij ShipFlex");
+        System.out.println("Voer uw inlogcode in:");
+        String loginGebruiker = scanner.nextLine();
+        boolean isValidGebruiker = false;
+
+
+        Gebruiker jouGebruiker = null;
+        for (Gebruiker gebruiker : gebruikers) {
+            if (loginGebruiker.equals(gebruiker.getGebruikernaam())) {
+                isValidGebruiker = true;
+                jouGebruiker = gebruiker;
+            }
+        }
+
+        if (!isValidGebruiker) {
+            System.out.println("Ongeldige gebruikersnr");
+            login(gebruikers, klant, klantTypes, totaal, onderdelen, soortOnderdelens);
+        }
+        if (loginGebruiker.equals("Qwerty123")) {
+
+            scheepsBouwerMenu(jouGebruiker, totaal, klant, klantTypes, onderdelen, soortOnderdelens, gebruikers);
+        }
+         else {
+            klantMenu(jouGebruiker, gebruikers, klant, klantTypes, totaal, onderdelen, soortOnderdelens);
+        }
+    }
+
+    public static void klantMenu(Gebruiker jouGebruiker, ArrayList<Gebruiker> gebruikers, KlantType klant, ArrayList<KlantType> klantTypes, Totaal totaal, ArrayList<Onderdelen> onderdelen, ArrayList<SoortOnderdelen> soortOnderdelens) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("1. Zie offerte");
+        System.out.println("2. Zie lijst met opties");
+        System.out.println("3, Maak zelf een lijst");
+        System.out.println("4. Log uit");
+        int keuze = scanner.nextInt();
+        if (keuze == 1) {
+            zieOfferte(jouGebruiker, gebruikers, klant, klantTypes, totaal, onderdelen, soortOnderdelens);
+        }
+        if (keuze == 2) {
+            zieLijstopties(onderdelen, soortOnderdelens);
+
+        }
+        if (keuze == 3) {
+            maakKlantLijst();
+        }
+        if (keuze == 4) {
+            login(gebruikers, klant, klantTypes, totaal, onderdelen, soortOnderdelens);
+        }
+    }
+
+    public static void zieOfferte(Gebruiker jouGebruiker, ArrayList<Gebruiker> gebruikers, KlantType klant, ArrayList<KlantType> klantTypes, Totaal totaal, ArrayList<Onderdelen> onderdelen, ArrayList<SoortOnderdelen> soortOnderdelens) {
+
+        System.out.println(jouGebruiker.getTotaal().getTotaalPrijs());
+        for(Onderdelen onderdeel: jouGebruiker.getTotaal().onderdelen){
+        System.out.println(onderdeel.getNaam() + "prijs: " + onderdeel.getPrijs()) ;
+        }
+        System.out.println("Totaalprijs:" + jouGebruiker.getTotaal().getTotaalPrijs());
+
+    }
+
+    public static void zieLijstopties(ArrayList<Onderdelen> onderdelen, ArrayList<SoortOnderdelen> soortOnderdelens) {
+lijstOpties(onderdelen, soortOnderdelens);
+    }
+
+    public static void maakKlantLijst() {
+
+    }
+
+    public static void scheepsBouwerMenu(Gebruiker jouGebruiker, Totaal totaal, KlantType klant, ArrayList<KlantType> klanten, ArrayList<Onderdelen> onderdelen, ArrayList<SoortOnderdelen> soortOnderdelens, ArrayList<Gebruiker> gebruikers) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Kies voor 1 van opties:");
+        System.out.println("1. Maak een offerte");
+        System.out.println("2. Zie lijst met opties");
+        System.out.println("3. Voeg klant kortingen toe");
+        System.out.println("4. Voeg milieukortingen toe");
+        System.out.println("5. Voeg nieuwe klant types toe");
+        System.out.println("6. Voeg nieuwe onderdelen toe");
+        System.out.println("7. Log uit");
+
+        int keuze = scanner.nextInt();
+        if (keuze == 1) {
+            offerteMaker(jouGebruiker, totaal, klant, onderdelen, soortOnderdelens, klanten, gebruikers);
+        }
+        if (keuze == 2) {
+            lijstOpties(onderdelen, soortOnderdelens);
+        }
+        if (keuze == 3) {
+            kiesKlantkorting(jouGebruiker, totaal, klant,klanten, onderdelen, soortOnderdelens, gebruikers);
+        }
+        if (keuze == 4) {
+            voegMilieukorting();
+        }
+        if (keuze == 5) {
+            maakNieuweKlantType(jouGebruiker, totaal, klant, klanten, onderdelen, soortOnderdelens, gebruikers);
+        }
+        if (keuze == 6) {
+            voegNieuweOnderdelen(onderdelen, soortOnderdelens);
+        }
+        if (keuze == 7) {
+            login(gebruikers, klant, klanten, totaal, onderdelen, soortOnderdelens);
+        }
+    }
+
+    public static void offerteMaker(Gebruiker jouGebruiker, Totaal totaal, KlantType klant, ArrayList<Onderdelen> selectedOnderdelen, ArrayList<SoortOnderdelen> categorien, ArrayList<KlantType> klantTypes, ArrayList<Gebruiker> gebruikers) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Voer de klantCode in voor wie deze offerte is:");
+        String gebruikersNaam = scanner.nextLine();
+        boolean isValidGebruiker = false;
+        for (Gebruiker gebruiker : gebruikers) {
+            if (gebruikersNaam.equals(gebruiker.getGebruikernaam())) {
+                isValidGebruiker = true;
+            }
+        }
+
+        if (!isValidGebruiker) {
+            System.out.println("Ongeldige gebruikersnr");
+            offerteMaker(jouGebruiker ,totaal, klant, selectedOnderdelen, categorien, klantTypes, gebruikers);
+        }
+        for (Gebruiker gebruiker : gebruikers) {
+            if (gebruikersNaam.equals(gebruiker.getGebruikernaam()) && gebruiker.getKlanttype() == null) {
+                System.out.println("Wat voor klant is " + gebruiker.getGebruikernaam() + "?");
+                for(KlantType klanten: klantTypes){
+                    int i = 1;
+                    System.out.println(i + ". " + klanten.getNaam());
+                }
+                int kiesKlantType = scanner.nextInt();
+                gebruiker.setKlanttype(klantTypes.get(kiesKlantType - 1));
+                System.out.print(gebruiker.getKlanttype().getKorting());
+
+            }
+        }
+        int input = 1;
+        while (input != 3) {
+            System.out.println("Voor welke soort onderdelen wilt u kiezen?:");
+            for (int i = 0; i < categorien.size(); i++) {
+                //print catogorien
+                System.out.println((i + 1) + ". " + categorien.get(i).soortOnderdeel);
+            }
+
+            int selectedCategoryIndex = scanner.nextInt() - 1;
+            SoortOnderdelen selectedCategory = categorien.get(selectedCategoryIndex);
+
+            System.out.println("U heeft gekozen voor " + selectedCategory.soortOnderdeel);
+            System.out.println("Welke onderdelen wilt u toevoegen? (kies 0 om te stoppen)");
+
+
+            for (int i = 0; i < selectedCategory.onderdelen.size(); i++) {
+                //print specifieke onderdelen
+                System.out.println((i + 1) + ". " + selectedCategory.onderdelen.get(i).getNaam());
+            }
+            int selectedOnderdeelIndex = scanner.nextInt() - 1;
+            Onderdelen selectedOnderdeel = selectedCategory.onderdelen.get(selectedOnderdeelIndex);
+            System.out.println("Kies de prijs voor dit onderdeel");
+            int prijs = scanner.nextInt();
+            selectedOnderdeel.setPrijs(prijs);
+            selectedOnderdelen.add(selectedOnderdeel);
+            System.out.println(selectedOnderdeel.getNaam() + " is toegevoegd aan de offerte");
+            System.out.println("Wilt u nog meer onderdelen toevoegen?");
+            System.out.println("Type 1 om door te gaan");
+            System.out.println("type 2 om extra opties toe tevoegen");
+            System.out.println("type 3 om te stoppen");
+            input = scanner.nextInt();
+            if (input == 2) {
+                System.out.println("Wilt u extra opties toevoegen? (ja/nee): ");
+                scanner.nextLine();
+                String antwoord = scanner.nextLine();
+                while (antwoord.equals("ja")) {
+                    System.out.println("Kies een extra optie:");
+                    System.out.println("1. Airconditioning");
+                    System.out.println("2. koelkast");
+                    System.out.println("3. Binnenstoelen");
+                    System.out.println("4. Lifevest");
+                    System.out.print("Voer het nummer van de gewenste optie in: ");
+                    int keuze = scanner.nextInt();
+
+                    if (keuze == 1) {
+                        categorien.get(4).getOnderdelen().get(0).setPrijs(250);
+                        selectedOnderdelen.add(categorien.get(4).getOnderdelen().get(0));
+                    } else if (keuze == 2) {
+                        categorien.get(4).getOnderdelen().get(1).setPrijs(500);
+                        selectedOnderdelen.add(categorien.get(4).getOnderdelen().get(1));
+                    } else if (keuze == 3) {
+                        categorien.get(4).getOnderdelen().get(2).setPrijs(1000);
+                        selectedOnderdelen.add(categorien.get(4).getOnderdelen().get(2));
+                    } else if (keuze == 4) {
+                        categorien.get(4).getOnderdelen().get(3).setPrijs(2000);
+                        selectedOnderdelen.add(categorien.get(4).getOnderdelen().get(3));
+                    }
+
+                    System.out.print("Wilt u nog meer opties toevoegen? (ja/nee): ");
+                    scanner.nextLine();
+                    antwoord = scanner.nextLine();
+                }
+            }
+
+        }
+
+        System.out.println("Uw offerte bestaat uit:");
+
+        for (Onderdelen onderdeel : selectedOnderdelen) {
+            System.out.println("- " + onderdeel.getNaam());
+        }
+        totaal.setOnderdelen(selectedOnderdelen);
+
+        for (Gebruiker gebruiker : gebruikers) {
+            if (gebruiker.getGebruikernaam().equals(gebruikersNaam)) {
+                totaal.setKlantType(gebruiker.getKlanttype());
+                gebruiker.setTotaal(totaal);
+
+
+            }
+        }
+        totaal.setTotaalPrijs(selectedOnderdelen);
+
+        System.out.println("Totaalprijs: " + totaal.getTotaalPrijs());
+        //ERROR!!
+        //god
+        //help
+        //me please
+
+        scheepsBouwerMenu(jouGebruiker, totaal, klant, klantTypes, selectedOnderdelen, categorien, gebruikers);
+
+    }
+
+
+
+    public static void lijstOpties(ArrayList<Onderdelen> onderdelen, ArrayList<SoortOnderdelen> soortOnderdelens) {
+
+        ArrayList<String> navigatieSystemen = new ArrayList<>();
+        navigatieSystemen.add("GPS Ontvanger");
+        navigatieSystemen.add("Kaartplotter");
+        navigatieSystemen.add("Compass");
+        navigatieSystemen.add("Diepte meter");
+        navigatieSystemen.add("Traagsheidsnavigatie");
+
+        List<String> list = navigatieSystemen;
+
+        System.out.println("List navigatiesystem: ");
+        System.out.println();
+        for (String item : list) {
+            System.out.println("-" + item);
+        }
+        System.out.println();
+
+        ArrayList<String> houten = new ArrayList<>();
+        houten.add("Iroko");
+        houten.add("Mahonie");
+        houten.add("Oak");
+        houten.add("Plantage teak");
+        houten.add("Padoekes");
+        houten.add("Marple");
+        houten.add("Essen");
+        houten.add("Afzelia");
+
+        List<String> list1 = houten;
+
+        System.out.println("List hout: ");
+        System.out.println();
+        for (String item1 : list1) {
+            System.out.println("-" + item1);
+        }
+        System.out.println();
+
+        ArrayList<String> motors = new ArrayList<>();
+        motors.add("Elektrische binnenboord motor");
+        motors.add("Elektrische buitenboord motor");
+        motors.add("Diesel binnenboord motor");
+        motors.add("Diesel buitenboord motor");
+
+        List<String> list2 = motors;
+
+        System.out.println("List motors: ");
+        System.out.println();
+        for (String item2 : list2) {
+            System.out.println("-" + item2);
+        }
+        System.out.println();
+
+        ArrayList<String> brandstofTanken = new ArrayList<>();
+        brandstofTanken.add("Standaard tank");
+        brandstofTanken.add("Groot tank");
+        brandstofTanken.add("Extra groot tank");
+        brandstofTanken.add("Jerrycan");
+
+        List<String> list3 = brandstofTanken;
+
+        System.out.println("List brandstofTank: ");
+        System.out.println();
+        for (String item3 : list3) {
+            System.out.println("-" + item3);
+
+        }
+    }
+
+
+    public static void voegMilieukorting() {
+    }
+
+    public static void kiesKlantkorting(Gebruiker jouGebruiker, Totaal totaal, KlantType klant, ArrayList<KlantType> klanten, ArrayList<Onderdelen> onderdelen, ArrayList<SoortOnderdelen> soortOnderdelens, ArrayList<Gebruiker> gebruikers) {
+        Scanner scanner = new Scanner(System.in);
+
+        for (int i = 0; i < klanten.size(); i++) {
+            System.out.println((i + 1) + ". " + klanten.get(i).getNaam());
+        }
+
+        System.out.println("Kies een klanttype: ");
+        int keuze = scanner.nextInt();
+
+        if (keuze >= 1 && keuze <= klanten.size()) {
+
+            System.out.println(klanten.get(keuze - 1).getNaam() + " geselecteerd.");
+
+        } else {
+            System.out.println("Ongeldige keuze.");
+        }
+        System.out.println("Kies hoeveel korting u wilt toevoegen:");
+        int korting = scanner.nextInt();
+        klanten.get(keuze - 1).setKorting(korting);
+         scheepsBouwerMenu(jouGebruiker, totaal, klant,  klanten,  onderdelen, soortOnderdelens,  gebruikers);
+    }
+
+    public static void voegNieuweOnderdelen(ArrayList<Onderdelen> onderdelen, ArrayList<SoortOnderdelen> soortOnderdelens) {
+    }
+    public static void maakNieuweKlantType(Gebruiker jouGebruiker, Totaal totaal, KlantType klant, ArrayList<KlantType> klanten, ArrayList<Onderdelen> onderdelen, ArrayList<SoortOnderdelen> soortOnderdelens, ArrayList<Gebruiker> gebruikers){
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Wilt u een nieuwe klanttype aanmaken? J/N");
+        String keuze = scanner.nextLine();
+        if (keuze.equals( "J")){
+            System.out.println("Hoe heet deze klanttype:");
+            String naam = scanner.nextLine();
+            klanten.add( new KlantType(naam));
+            System.out.println(naam + " is toegevoegd aan de klanttypen");
+            scheepsBouwerMenu(jouGebruiker, totaal, klant, klanten, onderdelen, soortOnderdelens, gebruikers);
+        }
+
+
+    }
+
+
+
+    public static void initialiseerGebruikers(ArrayList<Gebruiker> gebruikers) {
+        gebruikers.add(new Gebruiker("Qwerty123"));
+        gebruikers.add(new Gebruiker("12345"));
+        gebruikers.add(new Gebruiker("Angelo"));
+        gebruikers.add(new Gebruiker("Yegor"));
+        gebruikers.add(new Gebruiker("Chaimae"));
+        gebruikers.add(new Gebruiker("Milana"));
+        gebruikers.add(new Gebruiker("Lennart"));
+    }
+
+    public static void initialiseerExtra(ArrayList<Onderdelen> extra) {
+        extra.add(new Onderdelen("Airconditioning"));
+        extra.add(new Onderdelen("Koelkast"));
+        extra.add(new Onderdelen("Binnenstoelen"));
+        extra.add(new Onderdelen("Lifevest"));
+    }
+
+
+    public static void initialiseerKlanttype(ArrayList<KlantType> klantTypes) {
+        klantTypes.add(new KlantType("Particulier"));
+        klantTypes.add(new KlantType("Bedrijf"));
+        klantTypes.add(new KlantType("Overheid"));
+    }
+
+    public static void initialiseerNavigatieSysteem(ArrayList<Onderdelen> navigatieSystemen) {
+        navigatieSystemen.add(new Onderdelen("GPS Ontvanger"));
+        navigatieSystemen.add(new Onderdelen("Kaartplotter"));
+        navigatieSystemen.add(new Onderdelen("Compass"));
+        navigatieSystemen.add(new Onderdelen("Diepte meter"));
+        navigatieSystemen.add(new Onderdelen("Traagsheidsnavigatie"));
+    }
+
+    public static void initialiseerHout(ArrayList<Onderdelen> hout) {
+        hout.add(new Onderdelen("Iroko"));
+        hout.add(new Onderdelen("Mahonie"));
+        hout.add(new Onderdelen("Oak"));
+        hout.add(new Onderdelen("Plantage teak"));
+        hout.add(new Onderdelen("Padoekes"));
+        hout.add(new Onderdelen("Marple"));
+        hout.add(new Onderdelen("Essen"));
+        hout.add(new Onderdelen("Afzelia"));
+    }
+
+    public static void initialiseerMotor(ArrayList<Onderdelen> motors) {
+        motors.add(new Onderdelen("Elektrische binnenboord motor"));
+        motors.add(new Onderdelen("Elektrische buitenboord motor"));
+        motors.add(new Onderdelen("Diesel binnenboord motor"));
+        motors.add(new Onderdelen("Diesel buitenboord motor"));
+    }
+
+    public static void initialiseerBrandstofTank(ArrayList<Onderdelen> brandstofTanken) {
+        brandstofTanken.add(new Onderdelen("Standaard tank"));
+        brandstofTanken.add(new Onderdelen("Groot tank"));
+        brandstofTanken.add(new Onderdelen("Extra groot tank"));
+        brandstofTanken.add(new Onderdelen("Jerrycan"));
+    }
+
+    public static void initialiseerCategorien(ArrayList<SoortOnderdelen> categorien, SoortOnderdelen navigatieSysteem, SoortOnderdelen motor, SoortOnderdelen brandStofTank, SoortOnderdelen hout, SoortOnderdelen extra) {
+        categorien.add(navigatieSysteem);
+        categorien.add(motor);
+        categorien.add(brandStofTank);
+        categorien.add(hout);
+        categorien.add(extra);
+
+    }
+}
+
+
+
+class Offerte{
+
+    protected SoortOnderdelen soortOnderdelen;
+    protected Gebruiker klant;
+    protected Totaal totaal;
+
+
+    Offerte(Gebruiker klant, Totaal totaal){
+        this.klant = klant;
+        this.totaal = totaal;
+    }
+
+    public void setOfferte(){}
+
+
+
+}
+
+
+class Gebruiker {
+    protected String gebruikernr;
+    protected KlantType klanttype;
+    protected Totaal totaal;
+
+    Gebruiker(String gebruikernr) {
+        this.gebruikernr = gebruikernr;
+
+    }
+
+
+    Gebruiker(String gebruikernr, KlantType klanttype) {
+        super();
+        this.klanttype = klanttype;
+
+    }
+
+    public void setTotaal(Totaal totaal){
+        this.totaal = totaal;
+    }
+    public Totaal getTotaal(){
+        return totaal;
+    }
+    public void setGebruikernr() {
+        this.gebruikernr = gebruikernr;
+    }
+
+    public String getGebruikernaam() {
+        return gebruikernr;
+    }
+
+    public void setKlanttype(KlantType klantType) {
+        this.klanttype = klantType;
+    }
+    public KlantType getKlanttype(){
+        return klanttype;
+    }
+}
+
+class Totaal{
+    protected KlantType klantType;
+
+    protected double totaalprijs;
+    protected SoortOnderdelen soortOnderdelen;
+    protected ArrayList<Onderdelen> onderdelen;
+    protected Onderdelen onderdeel;
+
+    Totaal(){
+
+    }
+    public void setTotaalPrijs(ArrayList<Onderdelen> onderdelen) {
+        int totaalprijs = 0;
+        for (Onderdelen onderdeel : onderdelen) {
+            totaalprijs += onderdeel.getPrijs();
+        }
+        int korting = klantType.getKorting();
+        int kortingBedrag = (totaalprijs * korting) / 100;
+        double eindprijs = totaalprijs - kortingBedrag;
+        this.totaalprijs = eindprijs;
+    }
+    public void setOnderdelen(ArrayList<Onderdelen> onderdelen){
+        this.onderdelen = onderdelen;
+    }
+
+
+    public double  getTotaalPrijs(){
+        return totaalprijs;
+    }
+    public void setKlantType(KlantType klantType) {
+        this.klantType = klantType;
+    }
+}
+class KlantType{
+    protected String naam;
+    protected int korting;
+
+    KlantType(String naam){
+        this.naam = naam;
+    }
+
+     KlantType() {
+
+    }
+
+    public void setNaam(String naam){
+        this.naam= naam;
+    }
+    public void setKorting(int korting){
+        this.korting = korting;
+    }
+
+    public String getNaam(){
+        return naam;
+    }
+    public int getKorting() {
+        return korting;
+    }
+}
+class SoortOnderdelen{
+    protected String soortOnderdeel;
+    protected ArrayList<Onderdelen> onderdelen;
+
+    SoortOnderdelen(String soortOnderdeel){
+        this.soortOnderdeel = soortOnderdeel;
+    }
+    public void setOnderdelen(ArrayList <Onderdelen> onderdelen){
+        this.onderdelen = onderdelen;
+    }
+    public ArrayList <Onderdelen> getOnderdelen(){
+        return onderdelen;
+    }
+
+
+
+}
+class Onderdelen{
+    protected String naam;
+    protected double prijs;
+
+    Onderdelen(String naam){
+        this.naam = naam;
+    }
+    Onderdelen(String naam, double prijs){
+        this.naam = naam;
+        this.prijs = prijs;
+    }
+
+
+    Onderdelen(){
+
+    }
+    public void setPrijs(double prijs){
+        this.prijs = prijs;
+    }
+    public void setNaam(){
+        this.naam = naam;
+    }
+    public double getPrijs(){
+        return prijs;
+    }
+    public String getNaam(){
+        return naam;
+    }
+
+    public void Onderdelen(){
+
+    }
+}
+class UnitTests{
+
+
+    @Test
+
+    public void checkBerekeningKlantKortingOpOfferte(){
+        Gebruiker gebruiker = new Gebruiker("Steven");
+        KlantType klantType = new KlantType();
+        ArrayList <Onderdelen> onderdelen = new ArrayList<>();
+        Onderdelen onderdeel= new Onderdelen("Walrus", 700);
+        onderdelen.add(onderdeel);
+        Totaal totaal = new Totaal();
+        klantType.setNaam("TEST");
+        klantType.setKorting(20);
+        gebruiker.setKlanttype(klantType);
+        totaal.setKlantType(gebruiker.getKlanttype());
+        System.out.println(gebruiker.getKlanttype().getNaam());
+        totaal.setTotaalPrijs(onderdelen);
+
+        System.out.print(totaal.getTotaalPrijs());
+    }
+    @Test
+    public void checkToevoegenKlantType(){
+        KlantType klantType = new KlantType();
+        klantType.setNaam("NieuweKlant");
+        Assertions.assertTrue(klantType.getNaam().equals("NieuweKlant"));
+    }
+    @Test
+    public void checkToevoegenKlantKorting(){
+        KlantType klantType = new KlantType();
+        int nummer = 20;
+        klantType.setKorting(nummer);
+        Assertions.assertTrue(klantType.getKorting() == 20);
+    }
+
+    public void checkTotaalPrijs(){}
+
+    @Test
+    public void initialiseerOnderdelen(){
+
+        SoortOnderdelen extra = new SoortOnderdelen("Extra");
+        ArrayList<Onderdelen> lijstOnderdelen = new ArrayList<>();
+        lijstOnderdelen.add(new Onderdelen("Romp"));
+        lijstOnderdelen.add(new Onderdelen("Stuur"));
+        lijstOnderdelen.add(new Onderdelen("Anker"));
+        lijstOnderdelen.add(new Onderdelen("Zeil"));
+        extra.setOnderdelen(lijstOnderdelen);
+
+        Assertions.assertTrue(lijstOnderdelen.get(0).naam.equals("Romp"));
+        Assertions.assertTrue(lijstOnderdelen.get(1).naam.equals("Stuur"));
+        Assertions.assertTrue(lijstOnderdelen.get(2).naam.equals("Anker"));
+        Assertions.assertTrue(lijstOnderdelen.get(3).naam.equals("Zeil"));
+
+
+    }
+}
