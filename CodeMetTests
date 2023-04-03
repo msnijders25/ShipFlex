@@ -691,6 +691,9 @@ class UnitTests{
         lijstOnderdelen.add(new Onderdelen("Anker"));
         lijstOnderdelen.add(new Onderdelen("Zeil"));
         extra.setOnderdelen(lijstOnderdelen);
+        for(Onderdelen onderdeel: extra.getOnderdelen()){
+            int i = 0;
+        System.out.println(onderdeel.getNaam()); }
 
         Assertions.assertTrue(lijstOnderdelen.get(0).naam.equals("Romp"));
         Assertions.assertTrue(lijstOnderdelen.get(1).naam.equals("Stuur"));
