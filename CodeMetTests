@@ -376,12 +376,13 @@ lijstOpties(onderdelen, soortOnderdelens);
 
     public static void kiesKlantkorting(Gebruiker jouGebruiker, Totaal totaal, KlantType klant, ArrayList<KlantType> klanten, ArrayList<Onderdelen> onderdelen, ArrayList<SoortOnderdelen> soortOnderdelens, ArrayList<Gebruiker> gebruikers) {
         Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("Kies een klanttype: ");
 
         for (int i = 0; i < klanten.size(); i++) {
             System.out.println((i + 1) + ". " + klanten.get(i).getNaam());
         }
 
-        System.out.println("Kies een klanttype: ");
         int keuze = scanner.nextInt();
 
         if (keuze >= 1 && keuze <= klanten.size()) {
