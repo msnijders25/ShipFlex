@@ -466,6 +466,17 @@ klantMenu( jouGebruiker, gebruikers, klant,  klantTypes,  totaal,  onderdelen,  
     }
 
     public static void voegNieuweOnderdelen(ArrayList<Onderdelen> onderdelen, ArrayList<SoortOnderdelen> soortOnderdelens) {
+            Scanner scanner = new Scanner(System.in);
+        System.out.println("Wilt u nog een onderdeel toevoegen? J/N");
+        String keuze = scanner.nextLine();
+            if (keuze.equals("J")) {
+                System.out.println("Hoe heet het onderdeel?: ");
+                String naam = scanner.nextLine();
+                onderdelen.add(new Onderdelen(naam));
+                scheepsBouwerMenu(jouGebruiker, totaal );
+            }
+    }
+  
     }
     public static void maakNieuweKlantType(Gebruiker jouGebruiker, Totaal totaal, KlantType klant, ArrayList<KlantType> klanten, ArrayList<Onderdelen> onderdelen, ArrayList<SoortOnderdelen> soortOnderdelens, ArrayList<Gebruiker> gebruikers){
         Scanner scanner = new Scanner(System.in);
