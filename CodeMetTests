@@ -130,6 +130,13 @@ public class Main {
 
     public static void zieLijstopties(ArrayList<Onderdelen> onderdelen, ArrayList<SoortOnderdelen> soortOnderdelens) {
 lijstOpties(onderdelen, soortOnderdelens);
+        lijstOpties(onderdelen, soortOnderdelens);
+        List<String> zielijstOpties = new ArrayList<>();
+        for (String item : zielijstOpties) {
+            System.out.println("-" + item);
+        }
+        System.out.println();
+        return zielijstOpties;
     }
 
     public static void maakKlantLijst() {
